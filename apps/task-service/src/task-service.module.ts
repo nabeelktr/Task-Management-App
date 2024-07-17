@@ -38,7 +38,8 @@ import { Task, TaskSchema } from './schemas/task.schems';
   imports: [ConfigModule.forRoot({
     isGlobal: true,
     validationSchema: Joi.object({
-      MONGODB_URI: Joi.string().required()
+      MONGODB_URI: Joi.string().required(),
+      PORT: Joi.number().required(),
     }),
     envFilePath: "./apps/task-service/.env"
   }),
