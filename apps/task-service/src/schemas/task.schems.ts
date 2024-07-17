@@ -1,17 +1,7 @@
 import { AbstractDocument } from "@app/common/database/abstract.schema";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-
-export enum TaskStatus {
-  TODO = "TODO",
-  IN_PROGRESS = "IN_PROGRESS",
-  DONE = "DONE",
-}
-
-export enum TaskPriority {
-  LOW = "LOW",
-  MEDIUM = "MEDIUM",
-  HIGH = "HIGH",
-}
+import { TaskStatus } from "../enums/task-status.enum";
+import { TaskPriority } from "../enums/task-priority.enum";
 
 @Schema({ versionKey: false })
 export class Task extends AbstractDocument {
@@ -22,16 +12,10 @@ export class Task extends AbstractDocument {
   description?: string;
 
   @Prop({ enum: TaskStatus, default: TaskStatus.TODO })
-  status: TaskStatus;
+  status?: TaskStatus;
 
   @Prop({ enum: TaskPriority, required: false })
   priority?: TaskPriority;
-
-  @Prop({ default: Date.now })
-  createdAt: Date;
-
-  @Prop({ default: Date.now })
-  updatedAt: Date;
 
   @Prop({ required: false })
   assignee?: string;

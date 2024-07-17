@@ -5,8 +5,4 @@ import { ApiGatewayService } from "./api-gateway.service";
 export class ApiGatewayController {
   constructor(private readonly apiGatewayService: ApiGatewayService) {}
 
-  @Post()
-  async createTask(@Body request: CreateTaskRequest): string {
-    return this.apiGatewayService.createTask(request);
-  }
 }
