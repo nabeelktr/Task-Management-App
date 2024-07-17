@@ -12,15 +12,21 @@ services:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
+<<<<<<< HEAD
       - task-service
       - auth-service
+=======
+>>>>>>> f23eb73 (Initialize Dockerfile setup)
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - '3001:3001'
+<<<<<<< HEAD
     networks:
       - my-network
+=======
+>>>>>>> f23eb73 (Initialize Dockerfile setup)
 
   task-service:
     build:
@@ -34,13 +40,17 @@ services:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
+<<<<<<< HEAD
       - rabbitmq
       - auth-service
+=======
+>>>>>>> f23eb73 (Initialize Dockerfile setup)
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - '3002:3002'
+<<<<<<< HEAD
     networks:
       - my-network
 
@@ -71,6 +81,8 @@ services:
       - '5672:5672'
     networks:
       - my-network
+=======
+>>>>>>> f23eb73 (Initialize Dockerfile setup)
 
   mongodb-primary:
     image: docker.io/bitnami/mongodb:5.0
@@ -83,8 +95,11 @@ services:
       - 'mongodb_master_data:/bitnami/mongodb'
     ports:
       - '27017:27017'
+<<<<<<< HEAD
     networks:
       - my-network
+=======
+>>>>>>> f23eb73 (Initialize Dockerfile setup)
 
   mongodb-secondary:
     image: docker.io/bitnami/mongodb:5.0
@@ -96,8 +111,11 @@ services:
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
+<<<<<<< HEAD
     networks:
       - my-network
+=======
+>>>>>>> f23eb73 (Initialize Dockerfile setup)
 
   mongodb-arbiter:
     image: docker.io/bitnami/mongodb:5.0
@@ -109,12 +127,15 @@ services:
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
+<<<<<<< HEAD
     networks:
       - my-network
       
 networks:
   my-network:
     driver: bridge
+=======
+>>>>>>> f23eb73 (Initialize Dockerfile setup)
 
 volumes:
   mongodb_master_data:

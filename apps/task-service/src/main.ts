@@ -14,7 +14,11 @@ async function bootstrap() {
 
 async function bootstrap() {
   const app = await NestFactory.create(TaskServiceModule);
+<<<<<<< HEAD
   await app.listen(3001);
 >>>>>>> f359e91 (Complete setup of Task Service)
+=======
+  await app.listen(3002);
+>>>>>>> f23eb73 (Initialize Dockerfile setup)
 }
 bootstrap();
