@@ -25,6 +25,9 @@
         "tsConfigPath": "apps/task-service/tsconfig.app.json"
       }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bf6a401 (Complete database setup)
     },
     "common": {
       "type": "library",
@@ -34,6 +37,7 @@
       "compilerOptions": {
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
+<<<<<<< HEAD
     },
     "auth": {
       "type": "application",
@@ -45,6 +49,8 @@
       }
 =======
 >>>>>>> f359e91 (Complete setup of Task Service)
+=======
+>>>>>>> bf6a401 (Complete database setup)
     }
   }
 }
