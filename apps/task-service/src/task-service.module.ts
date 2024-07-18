@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TaskServiceController } from './task-service.controller';
 import { TaskServiceService } from './task-service.service';
 import { ConfigModule } from '@nestjs/config';
-import Joi from 'joi';
+import * as Joi from 'joi';
 import { DatabaseModule } from '@app/common/database/database.module';
 import { TaskRepository } from './task.repository';
 import { MongooseModule } from '@nestjs/mongoose';

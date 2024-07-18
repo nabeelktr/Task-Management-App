@@ -12,11 +12,14 @@ services:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
+      - task-service
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - '3001:3001'
+    networks:
+      - my-network
 
   task-service:
     build:
@@ -35,6 +38,8 @@ services:
       - /usr/src/app/node_modules
     ports:
       - '3002:3002'
+    networks:
+      - my-network
 
   mongodb-primary:
     image: docker.io/bitnami/mongodb:5.0
@@ -47,6 +52,8 @@ services:
       - 'mongodb_master_data:/bitnami/mongodb'
     ports:
       - '27017:27017'
+    networks:
+      - my-network
 
   mongodb-secondary:
     image: docker.io/bitnami/mongodb:5.0
@@ -58,6 +65,8 @@ services:
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
+    networks:
+      - my-network
 
   mongodb-arbiter:
     image: docker.io/bitnami/mongodb:5.0
@@ -69,6 +78,12 @@ services:
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
+    networks:
+      - my-network
+      
+networks:
+  my-network:
+    driver: bridge
 
 volumes:
   mongodb_master_data:
