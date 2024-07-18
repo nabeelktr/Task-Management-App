@@ -13,11 +13,11 @@ export class CreateTaskRequest {
 
   @IsEnum(TaskStatus)
   @IsOptional()
-  status?: TaskStatus;
+  status: TaskStatus;
 
   @IsEnum(TaskPriority)
   @IsOptional()
-  priority?: TaskPriority;
+  priority: TaskPriority;
 
   @IsString()
   @IsOptional()

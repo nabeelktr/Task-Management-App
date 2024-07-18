@@ -11,11 +11,11 @@ export class Task extends AbstractDocument {
   @Prop({ required: false })
   description?: string;
 
-  @Prop({ enum: TaskStatus, default: TaskStatus.TODO })
-  status?: TaskStatus;
+  @Prop({type:String, enum: TaskStatus, default: TaskStatus.TODO })
+  status: TaskStatus;
 
-  @Prop({ enum: TaskPriority, required: false })
-  priority?: TaskPriority;
+  @Prop({type:String, enum: TaskPriority, required: false })
+  priority: TaskPriority;
 
   @Prop({ required: false })
   assignee?: string;
