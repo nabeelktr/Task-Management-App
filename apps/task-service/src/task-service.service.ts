@@ -22,4 +22,8 @@ export class TaskServiceService {
     await this.taskRepository.deleteById(taskId);
     return {success: "Task deleted successfully"}
   }
+
+  async getTask(taskId:string){
+    return this.taskRepository.findById(taskId);
+  }
 }
