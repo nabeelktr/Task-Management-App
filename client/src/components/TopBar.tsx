@@ -28,9 +28,8 @@ const TopBar = (props: Props) => {
             src="https://randomuser.me/api/portraits/men/75.jpg"
             width="36"
             height="36"
-            objectFit="cover"
             alt=""
-            className="rounded-full"
+            className=" rounded-full bg-cover"
           />
         </div>
       </div>

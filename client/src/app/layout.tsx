@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-w-full min-h-screen  h-screen overflow-hidden bg-blue-100">
+        <div className="min-w-full min-h-screen  h-screen overflow-hidden text-black bg-blue-100">
           <TopBar />
           <SideBar />
           {children}
