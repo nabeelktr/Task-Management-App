@@ -13,6 +13,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   await app.listen(configService.get("PORT"));
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 
@@ -26,5 +27,8 @@ async function bootstrap() {
 >>>>>>> f23eb73 (Initialize Dockerfile setup)
 =======
 >>>>>>> 46742ce (Complete Create Task API implementation)
+=======
+
+>>>>>>> 3ddc0a7 (bug fix)
 }
 bootstrap();

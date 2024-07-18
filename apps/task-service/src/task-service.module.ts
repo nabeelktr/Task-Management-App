@@ -7,8 +7,12 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 =======
 import { ConfigModule } from '@nestjs/config';
+<<<<<<< HEAD
 import Joi from 'joi';
 >>>>>>> bf6a401 (Complete database setup)
+=======
+import * as Joi from 'joi';
+>>>>>>> 3ddc0a7 (bug fix)
 import { DatabaseModule } from '@app/common/database/database.module';
 import { TaskRepository } from './task.repository';
 import { MongooseModule } from '@nestjs/mongoose';
