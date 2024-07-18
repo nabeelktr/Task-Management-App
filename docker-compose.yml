@@ -16,11 +16,14 @@ services:
 <<<<<<< HEAD
       - task-service
       - auth-service
+<<<<<<< HEAD
 =======
 >>>>>>> f23eb73 (Initialize Dockerfile setup)
 =======
       - task-service
 >>>>>>> 3ddc0a7 (bug fix)
+=======
+>>>>>>> d9b4ac6 (proxy added for auth)
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -52,8 +55,11 @@ services:
 <<<<<<< HEAD
       - rabbitmq
       - auth-service
+<<<<<<< HEAD
 =======
 >>>>>>> f23eb73 (Initialize Dockerfile setup)
+=======
+>>>>>>> d9b4ac6 (proxy added for auth)
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
