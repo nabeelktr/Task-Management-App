@@ -17,4 +17,9 @@ export class TaskServiceService {
   async updateTasks(taskId: string, updateData: Partial<CreateTaskRequest>){
     return this.taskRepository.findByIdAndUpdate(taskId, updateData);
   }
+
+  async deleteTask(taskId: string){
+    await this.taskRepository.deleteById(taskId);
+    return {success: "Task deleted successfully"}
+  }
 }
