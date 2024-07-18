@@ -38,6 +38,9 @@
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b8f7e5e (rabbitmq setup complete)
     },
     "auth": {
       "type": "application",
@@ -47,10 +50,13 @@
       "compilerOptions": {
         "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
+<<<<<<< HEAD
 =======
 >>>>>>> f359e91 (Complete setup of Task Service)
 =======
 >>>>>>> bf6a401 (Complete database setup)
+=======
+>>>>>>> b8f7e5e (rabbitmq setup complete)
     }
   }
 }
