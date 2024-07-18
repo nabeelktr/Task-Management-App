@@ -3,10 +3,10 @@ import { TaskServiceController } from './task-service.controller';
 import { TaskServiceService } from './task-service.service';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
-import { DatabaseModule } from '@app/common/database/database.module';
 import { TaskRepository } from './task.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Task, TaskSchema } from './schemas/task.schems';
+import { AuthModule, DatabaseModule } from '@app/common';
 
 
 @Module({
@@ -20,6 +20,7 @@ import { Task, TaskSchema } from './schemas/task.schems';
   }),
   DatabaseModule,
   MongooseModule.forFeature([{name: Task.name, schema: TaskSchema}]),
+  AuthModule,
 ],
   controllers: [TaskServiceController],
   providers: [TaskServiceService, TaskRepository],
