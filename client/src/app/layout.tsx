@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
-import TopBar from "../components/TopBar";
-import SideBar from "../components/SideBar";
 import { Providers } from "./Provider";
+import TopBar from "@/components/TopBar";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,7 +19,6 @@ export default function RootLayout({
       <body className={`${poppins.variable} bg-blue-100`}>
         <div className="min-w-full min-h-screen overflow-hidden text-black bg-blue-100">
           <TopBar />
-          <SideBar />
           <Providers>{children}</Providers>
         </div>
       </body>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Droppable } from "@hello-pangea/dnd";
+import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { DotsVerticalIcon, PlusCircleIcon } from "@heroicons/react/outline";
 import CardItem from "../components/CardItem";
 
@@ -24,6 +24,7 @@ const DroppableColumn = ({
   onTextAreaKeyPress,
   title,
 }: Props) => {
+    const filteredTasks = tasks.filter((task:any) => task.status === droppableId);
   return (
     <Droppable droppableId={droppableId}>
       {(provided, snapshot) => (
@@ -34,7 +35,7 @@ const DroppableColumn = ({
             snapshot.isDraggingOver ? "bg-green-100" : ""
           }`}
         >
-          <span className="w-full h-1 bg-gradient-to-r from-pink-700 to-red-200 absolute inset-x-0 top-0"></span>
+          <span className="w-full h-1 bg-gradient-to-r from-gray-800 to-blue-500 absolute inset-x-0 top-0"></span>
           <h4 className="p-3 flex justify-between items-center mb-2">
             <span className="text-xl text-gray-600 pl-4 pt-2 font-medium">{title}</span>
             <DotsVerticalIcon className="w-5 h-5 text-gray-500" />
@@ -43,13 +44,27 @@ const DroppableColumn = ({
             className="overflow-y-auto overflow-x-hidden h-auto"
             style={{ maxHeight: "calc(100vh - 290px)" }}
           >
-            {tasks &&
+
+            {/* {tasks &&
               tasks.map(
                 (item: any, index: number) =>
                   item.status === droppableId && (
-                    <CardItem key={item._id} data={item} index={index} />
+                    <CardItem key={index} data={item} index={index} />
                   )
-              )}
+              )} */}
+              {filteredTasks.map((item:any, index:number) => (
+              <Draggable key={item._id} draggableId={item._id} index={index}>
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <CardItem data={item} index={index} />
+                  </div>
+                )}
+              </Draggable>
+            ))}
             {provided.placeholder}
           </div>
           {title === "TODO" &&

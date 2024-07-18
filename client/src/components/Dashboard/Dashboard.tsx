@@ -23,6 +23,7 @@ const Dashboard = (props: Props) => {
   const {
     data: tasks,
     error,
+    isSuccess,
     isLoading: getTasksLoad,
     refetch,
   } = useGetTasksQuery({});
@@ -37,26 +38,27 @@ const Dashboard = (props: Props) => {
       setReady(true);
     }
   }, []);
+  useEffect(() => {
+    if (isSuccess && tasks) {
+      setBoardData(tasks);
+    }
+  },[isSuccess, tasks])
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
-
-    const sourceIndex = parseInt(result.source.droppableId);
-    const destIndex = parseInt(result.destination.droppableId);
-
-    const newBoardData = [...boardData];
-    const [movedItem] = newBoardData[sourceIndex].items.splice(
-      result.source.index,
-      1
-    );
-    newBoardData[destIndex].items.splice(
-      result.destination.index,
-      0,
-      movedItem
-    );
-
+    const { source, destination, draggableId } = result;
+    const taskIndex = boardData.findIndex((task:any) => task._id === draggableId);
+    if (taskIndex === -1) return;
+    const updatedTask = {
+        ...boardData[taskIndex],
+        status: destination.droppableId
+    };
+    const newBoardData = Array.from(boardData);
+    console.log(updatedTask);
+    newBoardData.splice(taskIndex, 1);
+    newBoardData.splice(destination.index, 0, updatedTask);
     setBoardData(newBoardData);
-  };
+};
 
   const onTextAreaKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
@@ -89,12 +91,12 @@ const Dashboard = (props: Props) => {
   return (
     <div className="p-10 flex flex-col min-h-screen font-Poppins">
       <DashHeader />
-      {ready && (
+      {ready && boardData && (
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="grid grid-cols-3 gap-8 my-5">
+          <div className="grid grid-cols-3 gap-8 my-5 min-h-[45rem]">
             <DroppableColumn
               droppableId="TODO"
-              tasks={tasks}
+              tasks={boardData}
               showForm={showForm}
               selectedBoard={selectedBoard}
               setSelectedBoard={setSelectedBoard}
@@ -104,7 +106,7 @@ const Dashboard = (props: Props) => {
             />
             <DroppableColumn
               droppableId="IN_PROGRESS"
-              tasks={tasks}
+              tasks={boardData}
               showForm={showForm}
               selectedBoard={selectedBoard}
               setSelectedBoard={setSelectedBoard}
@@ -114,7 +116,7 @@ const Dashboard = (props: Props) => {
             />
             <DroppableColumn
               droppableId="DONE"
-              tasks={tasks}
+              tasks={boardData}
               showForm={showForm}
               selectedBoard={selectedBoard}
               setSelectedBoard={setSelectedBoard}
