@@ -12,33 +12,15 @@ services:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
-<<<<<<< HEAD
-<<<<<<< HEAD
       - task-service
       - auth-service
-<<<<<<< HEAD
-=======
->>>>>>> f23eb73 (Initialize Dockerfile setup)
-=======
-      - task-service
->>>>>>> 3ddc0a7 (bug fix)
-=======
->>>>>>> d9b4ac6 (proxy added for auth)
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - '3001:3001'
-<<<<<<< HEAD
-<<<<<<< HEAD
     networks:
       - my-network
-=======
->>>>>>> f23eb73 (Initialize Dockerfile setup)
-=======
-    networks:
-      - my-network
->>>>>>> 3ddc0a7 (bug fix)
 
   task-service:
     build:
@@ -52,21 +34,13 @@ services:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
-<<<<<<< HEAD
       - rabbitmq
       - auth-service
-<<<<<<< HEAD
-=======
->>>>>>> f23eb73 (Initialize Dockerfile setup)
-=======
->>>>>>> d9b4ac6 (proxy added for auth)
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - '3002:3002'
-<<<<<<< HEAD
-<<<<<<< HEAD
     networks:
       - my-network
 
@@ -97,12 +71,6 @@ services:
       - '5672:5672'
     networks:
       - my-network
-=======
->>>>>>> f23eb73 (Initialize Dockerfile setup)
-=======
-    networks:
-      - my-network
->>>>>>> 3ddc0a7 (bug fix)
 
   mongodb-primary:
     image: docker.io/bitnami/mongodb:5.0
@@ -115,16 +83,8 @@ services:
       - 'mongodb_master_data:/bitnami/mongodb'
     ports:
       - '27017:27017'
-<<<<<<< HEAD
-<<<<<<< HEAD
     networks:
       - my-network
-=======
->>>>>>> f23eb73 (Initialize Dockerfile setup)
-=======
-    networks:
-      - my-network
->>>>>>> 3ddc0a7 (bug fix)
 
   mongodb-secondary:
     image: docker.io/bitnami/mongodb:5.0
@@ -136,16 +96,9 @@ services:
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
-<<<<<<< HEAD
-<<<<<<< HEAD
     networks:
       - my-network
-=======
->>>>>>> f23eb73 (Initialize Dockerfile setup)
-=======
-    networks:
-      - my-network
->>>>>>> 3ddc0a7 (bug fix)
+
 
   mongodb-arbiter:
     image: docker.io/bitnami/mongodb:5.0
@@ -157,21 +110,13 @@ services:
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3ddc0a7 (bug fix)
     networks:
       - my-network
       
 networks:
   my-network:
     driver: bridge
-<<<<<<< HEAD
-=======
->>>>>>> f23eb73 (Initialize Dockerfile setup)
-=======
->>>>>>> 3ddc0a7 (bug fix)
+
 
 volumes:
   mongodb_master_data:
