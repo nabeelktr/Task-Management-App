@@ -68,6 +68,17 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     });
   }
 
+  async findByIdAndUpdate(id: string, updateData: Partial<TDocument>): Promise<any> {
+    const updatedDocument = await this.model.findByIdAndUpdate(id, updateData, { new: true, lean: true });
+  
+    if (!updatedDocument) {
+      this.logger.warn(`Document not found with id: ${id}`);
+      throw new NotFoundException('Document not found.');
+    }
+    return updatedDocument;
+  }
+  
+
   async find(filterQuery: FilterQuery<TDocument>) {
     return this.model.find(filterQuery, {}, { lean: true });
   }

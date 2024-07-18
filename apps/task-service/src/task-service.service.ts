@@ -13,4 +13,8 @@ export class TaskServiceService {
   async getTasks(){
     return this.taskRepository.find({})
   }
+
+  async updateTasks(taskId: string, updateData: Partial<CreateTaskRequest>){
+    return this.taskRepository.findByIdAndUpdate(taskId, updateData);
+  }
 }
