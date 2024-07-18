@@ -68,8 +68,39 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     });
   }
 
+  async findByIdAndUpdate(id: string, updateData: Partial<TDocument>): Promise<any> {
+    const updatedDocument = await this.model.findByIdAndUpdate(id, updateData, { new: true, lean: true });
+  
+    if (!updatedDocument) {
+      this.logger.warn(`Document not found with id: ${id}`);
+      throw new NotFoundException('Document not found.');
+    }
+    return updatedDocument;
+  }
+
+  async findById(id: string): Promise<TDocument> {
+    const document = await this.model.findById(id);
+  
+    if (!document) {
+      this.logger.warn(`Document not found with id: ${id}`);
+      throw new NotFoundException('Document not found.');
+    }
+    return document;
+  }
+  
+
   async find(filterQuery: FilterQuery<TDocument>) {
     return this.model.find(filterQuery, {}, { lean: true });
+  }
+
+  async deleteById(id: string): Promise<void> {
+    const deletedDocument = await this.model.findByIdAndDelete(id).lean();
+
+    if (!deletedDocument) {
+      this.logger.warn(`Document not found with id: ${id}`);
+      throw new NotFoundException('Document not found.');
+    }
+    return
   }
 
   async startTransaction() {

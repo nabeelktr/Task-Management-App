@@ -5,17 +5,18 @@ import { TaskPriority } from "../enums/task-priority.enum";
 
 @Schema({ versionKey: false })
 export class Task extends AbstractDocument {
+
   @Prop({ required: true })
   title: string;
 
   @Prop({ required: false })
   description?: string;
 
-  @Prop({ enum: TaskStatus, default: TaskStatus.TODO })
-  status?: TaskStatus;
+  @Prop({type:String, enum: TaskStatus, default: TaskStatus.TODO })
+  status: TaskStatus;
 
-  @Prop({ enum: TaskPriority, required: false })
-  priority?: TaskPriority;
+  @Prop({type:String, enum: TaskPriority, required: false })
+  priority: TaskPriority;
 
   @Prop({ required: false })
   assignee?: string;
