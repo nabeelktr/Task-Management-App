@@ -25,4 +25,9 @@ export class TaskServiceController {
   async deleteTask(@Param("id") taskId: string){
     return this.taskServiceService.deleteTask(taskId);
   }
+
+  @Get('view/:id')
+  async getTask(@Param("id") taskId: string) {
+    return this.taskServiceService.getTask(taskId);
+  }
 }
