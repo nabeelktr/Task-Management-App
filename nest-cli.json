@@ -24,6 +24,7 @@
       "compilerOptions": {
         "tsConfigPath": "apps/task-service/tsconfig.app.json"
       }
+<<<<<<< HEAD
     },
     "common": {
       "type": "library",
@@ -42,6 +43,8 @@
       "compilerOptions": {
         "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
+=======
+>>>>>>> f359e91 (Complete setup of Task Service)
     }
   }
 }

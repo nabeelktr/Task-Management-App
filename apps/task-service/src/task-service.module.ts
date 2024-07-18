@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TaskServiceController } from './task-service.controller';
 import { TaskServiceService } from './task-service.service';
+<<<<<<< HEAD
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { DatabaseModule } from '@app/common/database/database.module';
@@ -23,5 +24,12 @@ import { Task, TaskSchema } from './schemas/task.schems';
 ],
   controllers: [TaskServiceController],
   providers: [TaskServiceService, TaskRepository],
+=======
+
+@Module({
+  imports: [],
+  controllers: [TaskServiceController],
+  providers: [TaskServiceService],
+>>>>>>> f359e91 (Complete setup of Task Service)
 })
 export class TaskServiceModule {}

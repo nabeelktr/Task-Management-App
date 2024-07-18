@@ -36,6 +36,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/ordering-app/test/jest-e2e.json"
   },
+
   "devDependencies": {
     "@nestjs/cli": "^10.4.2",
     "@types/cookie-parser": "^1.4.7",
