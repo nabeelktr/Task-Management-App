@@ -5,6 +5,7 @@ import { TaskPriority } from "../enums/task-priority.enum";
 
 @Schema({ versionKey: false })
 export class Task extends AbstractDocument {
+
   @Prop({ required: true })
   title: string;
 
