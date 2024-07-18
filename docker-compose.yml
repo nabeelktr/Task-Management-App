@@ -13,6 +13,7 @@ services:
       - mongodb-secondary
       - mongodb-arbiter
       - task-service
+      - auth-service
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -34,7 +35,7 @@ services:
       - mongodb-secondary
       - mongodb-arbiter
       - rabbitmq
-      - auth
+      - auth-service
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -44,7 +45,7 @@ services:
       - my-network
 <<<<<<< HEAD
 
-  auth:
+  auth-service:
     build:
       context: .
       dockerfile: ./apps/auth/Dockerfile
