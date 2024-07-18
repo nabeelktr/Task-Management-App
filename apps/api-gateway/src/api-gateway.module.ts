@@ -1,7 +1,7 @@
-import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
-import { ApiGatewayController } from './api-gateway.controller';
-import { ApiGatewayService } from './api-gateway.service';
-import { ProxyMiddleware } from './proxy.middleware';
+import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
+import { ApiGatewayController } from "./api-gateway.controller";
+import { ApiGatewayService } from "./api-gateway.service";
+import { ProxyMiddleware } from "./proxy.middleware";
 
 @Module({
   imports: [],
@@ -13,8 +13,8 @@ export class ApiGatewayModule {
     consumer
       .apply(ProxyMiddleware)
       .forRoutes(
-        { path: '/api/auth', method: RequestMethod.ALL },
-        { path: '/api/task', method: RequestMethod.ALL },
+        { path: "/api/auth", method: RequestMethod.ALL },
+        { path: "/api/task", method: RequestMethod.ALL }
       );
   }
 }
