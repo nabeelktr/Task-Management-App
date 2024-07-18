@@ -13,8 +13,5 @@ export class ApiGatewayModule {
       .apply(ReverseProxyTaskMiddleware)
       .forRoutes({ path: "v1/task-service/*", method: RequestMethod.ALL });
 
-    // consumer
-    // .apply(ReverseProxyTaskMiddleware)
-    // .forRoutes({ path: 'v1/auth-service/*', method: RequestMethod.ALL });
   }
 }
