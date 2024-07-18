@@ -41,16 +41,8 @@
     "@types/cookie-parser": "^1.4.7",
     "@types/express": "^4.17.21",
     "@types/http-proxy": "^1.17.14",
-<<<<<<< HEAD
-<<<<<<< HEAD
     "@types/passport-jwt": "^4.0.1",
     "@types/passport-local": "^1.0.38",
-=======
->>>>>>> 3ddc0a7 (bug fix)
-=======
-    "@types/passport-jwt": "^4.0.1",
-    "@types/passport-local": "^1.0.38",
->>>>>>> feature/gateway-service
     "ts-loader": "^9.5.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.3"
