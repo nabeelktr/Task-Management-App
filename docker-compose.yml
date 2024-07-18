@@ -43,7 +43,6 @@ services:
       - '3002:3002'
     networks:
       - my-network
-<<<<<<< HEAD
 
   auth-service:
     build:
@@ -72,8 +71,6 @@ services:
       - '5672:5672'
     networks:
       - my-network
-=======
->>>>>>> 3ddc0a7 (bug fix)
 
   mongodb-primary:
     image: docker.io/bitnami/mongodb:5.0
