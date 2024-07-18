@@ -8,7 +8,7 @@ const DashHeader = (props: Props) => {
   return (
     <div className="flex flex-initial justify-between">
     <div className="flex items-center">
-      <h4 className="text-4xl font-bold text-gray-600">DashBoard</h4>
+      <h4 className="text-4xl font-semibold text-gray-600">DashBoard</h4>
       <ChevronDownIcon
         className="w-9 h-9 text-gray-500 rounded-full
       p-1 bg-white ml-5 shadow-xl"

@@ -1,23 +1,26 @@
 import React from "react";
 import { Draggable } from "@hello-pangea/dnd";
 import {
-  PlusIcon,
   ChatAlt2Icon,
+  ClockIcon,
+  EyeIcon,
   PaperClipIcon,
+  UserAddIcon,
 } from "@heroicons/react/outline";
-import Image from "next/image";
+import { formatTimeLeft } from "@/utils/formatTimeLeft";
 
 type Assignee = {
   avt: string;
 };
 
 type Data = {
-  id: string | number;
-  priority: number;
+  _id: string ;
+  priority: string;
   title: string;
-  chat: number;
+  description: string;
   attachment: number;
-  assignees: Assignee[];
+  assignee: string;
+  dueDate: string;
 };
 
 type Props = {
@@ -26,9 +29,10 @@ type Props = {
 };
 
 const CardItem = ({ index, data }: Props) => {
+  console.log(data);
   return (
     <div className="m-3">
-      <Draggable index={index} draggableId={data.id.toString()}>
+      <Draggable index={index} draggableId={data._id}>
         {(provided) => (
           <div
             ref={provided.innerRef}
@@ -36,58 +40,38 @@ const CardItem = ({ index, data }: Props) => {
             {...provided.dragHandleProps}
             className="bg-white rounded-md p-3 m-3 mt-0 last:mb-0"
           >
+            <div className="flex justify-between">
             <label
               className={`bg-gradient-to-r
-                  px-2 py-1 rounded text-white text-sm
-                  ${
-                    data.priority === 0
-                      ? "from-blue-600 to-blue-400"
-                      : data.priority === 1
-                      ? "from-green-600 to-green-400"
-                      : "from-red-600 to-red-400"
-                  }
-                  `}
-            >
-              {data.priority === 0
-                ? "Low Priority"
-                : data.priority === 1
-                ? "Medium Priority"
-                : "High Priority"}
+                px-2 py-1 rounded text-white text-xs
+                ${
+                  data.priority === 'LOW'
+                  ? "from-blue-600 to-blue-400"
+                  : data.priority === 'MEDIUM'
+                  ? "from-green-600 to-green-400"
+                  : "from-red-600 to-red-400"
+                }
+                `}
+                >
+              {data.priority} Priority
             </label>
-            <h5 className="text-md my-3 text-lg leading-6">{data.title}</h5>
+            <EyeIcon className="w-6 h-6 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-1" />
+            </div>
+            <h5 className="text-md mt-2 text-md leading-6">{data.title}</h5>
+            <h3 className="text-md  text-xs mb-3 text-gray-600">{data.description}</h3>
             <div className="flex justify-between">
               <div className="flex space-x-2 items-center">
-                <span className="flex space-x-1 items-center">
-                  <ChatAlt2Icon className="w-4 h-4 text-gray-500" />
-                  <span>{data.chat}</span>
-                </span>
-                <span className="flex space-x-1 items-center">
-                  <PaperClipIcon className="w-4 h-4 text-gray-500" />
-                  <span>{data.attachment}</span>
+                <span className="flex space-x-1 items-center text-xs text-gray-500">
+                  <ClockIcon className="w-4 h-4 " />
+                  <span>{formatTimeLeft(data.dueDate)}</span>
                 </span>
               </div>
-
-              <ul className="flex space-x-3">
-                {data.assignees.map((ass: Assignee, index: number) => (
-                  <li key={index}>
-                    <Image
-                      src={ass.avt}
-                      width="36"
-                      height="36"
-                      className="rounded-full bg-cover"
-                      alt=""
-                    />
-                  </li>
-                ))}
-                <li>
-                  <button
-                    className="border border-dashed flex items-center w-9 h-9 border-gray-500 justify-center
-                        rounded-full"
-                  >
-                    <PlusIcon className="w-5 h-5 text-gray-500" />
-                  </button>
-                </li>
-              </ul>
+              <div className="flex space-x-2 items-center">
+                <span className="flex space-x-1 items-center text-xs text-gray-500">
+                  <span>{data.assignee}</span>
+                  <UserAddIcon className="w-4 h-4 " />
+                </span>
+              </div>
             </div>
           </div>
         )}
