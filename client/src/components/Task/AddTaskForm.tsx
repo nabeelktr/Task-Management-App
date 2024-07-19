@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { taskSchema } from "../../utils/yup";
 import { styles } from "../../styles/style";
 import { useAddTaskMutation } from '../../../redux/features/apiSlice';
+import { socketId } from '../../utils/socket';
 
 type TaskFormData = {
   title: string;
@@ -29,6 +30,7 @@ const AddTaskForm: React.FC<Props> = ({ setOpen }) => {
 
   const onSubmit = async (data: TaskFormData) => {
       await addTask({...data})
+      socketId.emit("tasks", {data: "task added"})
       setOpen(false);
   };
 
