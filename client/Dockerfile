@@ -1,6 +1,6 @@
-FROM node:21-alpine3.18
+FROM node:alpine
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY package*.json ./
 
@@ -8,6 +8,7 @@ RUN npm install
 
 COPY . .
 
+RUN npm i rimraf
 RUN npm run build
 
 EXPOSE 4000

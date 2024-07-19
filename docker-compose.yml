@@ -61,7 +61,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/auth/Dockerfile
-      target: development
+      target: production
     command: npm run start:dev auth
     ports:
       - '3003:3003'
