@@ -4,6 +4,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { taskSchema } from "../../utils/yup";
 import { styles } from "../../styles/style";
 import { useUpdateTaskMutation } from "../../../redux/features/apiSlice";
+import { socketId } from "../../utils/socket";
+import { useDispatch } from "react-redux";
+import { userLoggedOut } from "../../../redux/features/auth/authSlice";
+import { useModal } from "@/hooks/useModal";
 
 type TaskFormData = {
   _id?: string;
@@ -29,8 +33,16 @@ const EditTaskForm: React.FC<Props> = ({ setOpen, tasks: task }) => {
     resolver: yupResolver(taskSchema),
     defaultValues: task,
   });
-
-  const [updateTask, { isSuccess }] = useUpdateTaskMutation();
+  const dispatch = useDispatch()
+  const {setOpen:setAuthModal} = useModal()
+  const [updateTask, { isSuccess, error }] = useUpdateTaskMutation();
+  
+  useEffect(() => {
+    if(error){
+      dispatch(userLoggedOut())
+      setAuthModal(true)
+    }
+  }, [error])
 
   useEffect(() => {
     reset(task);
@@ -40,6 +52,7 @@ const EditTaskForm: React.FC<Props> = ({ setOpen, tasks: task }) => {
     try {
       const newData = { ...data, _id: task._id };
       await updateTask({ ...newData }).unwrap();
+      socketId.emit("tasks", {data: "task updated"})
       setOpen(false);
     } catch (error) {
       console.error("Error updating task:", error);
