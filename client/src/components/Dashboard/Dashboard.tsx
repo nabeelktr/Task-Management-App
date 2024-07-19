@@ -12,6 +12,7 @@ import DroppableColumn from "../DroppableColumn";
 import { useModal } from "../../hooks/useModal";
 import CustomModal from "@/utils/Modal/CustomModal";
 import AddTaskForm from "../Task/AddTaskForm";
+import { socketId } from "../../utils/socket";
 
 type Props = {};
 
@@ -64,6 +65,7 @@ const Dashboard = (props: Props) => {
     newBoardData.splice(destination.index, 0, updatedTask);
     setBoardData(newBoardData);
     await updateTask(updatedTask);
+    socketId.emit("tasks", {data: "hehe"})
   };
 
   if (getTasksLoad) {

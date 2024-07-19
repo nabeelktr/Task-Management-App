@@ -7,6 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { Toaster } from "sonner";
 import { ModalProvider } from "../hooks/useModal";
+import { SocketProvider } from "./socketProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,9 +27,11 @@ export default function RootLayout({
           <PersistGate loading={null} persistor={persistor}>
             <div className="min-w-full min-h-screen overflow-hidden text-black bg-blue-100">
               <ModalProvider>
-                <TopBar />
-                {children}
-                <Toaster position="top-center" />
+                <SocketProvider>
+                  <TopBar />
+                  {children}
+                  <Toaster position="top-center" />
+                </SocketProvider>
               </ModalProvider>
             </div>
           </PersistGate>
