@@ -86,7 +86,7 @@ const Dashboard = (props: Props) => {
       {isLoading && <Loader />}
       {ready && boardData && (
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="grid grid-cols-3 gap-8 my-5 min-h-[45rem]">
+          <div className="grid grid-cols-3 gap-4 lg:gap-8 my-5 min-h-[45rem]">
             <DroppableColumn
               droppableId="TODO"
               tasks={boardData}
