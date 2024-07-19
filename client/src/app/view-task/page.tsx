@@ -1,15 +1,15 @@
 "use client";
 import React from "react";
-import { useGetTaskQuery } from "../../../../redux/features/apiSlice";
 import Protected from "@/hooks/useProtected";
+import { useGetTaskQuery } from "../../../redux/features/apiSlice";
+import { useSearchParams } from "next/navigation";
 
-type Props = {
-  params: any;
-};
 
-const TaskPage = ({ params }: Props) => {
+const Page = () => {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id")
   const { data: task, isLoading: getTasksLoad } = useGetTaskQuery({
-    id: params.id,
+    id,
   });
 
   const getStatusColor = (status: string) => {
@@ -69,4 +69,4 @@ const TaskPage = ({ params }: Props) => {
   );
 };
 
-export default TaskPage;
+export default Page;

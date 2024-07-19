@@ -71,7 +71,7 @@ const CardItem = ({ index, data }: Props) => {
               className="w-6 h-6 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-1"
               onClick={() => setOpen(true)}
             />
-            <Link href={`/view-task/${data?._id}`} passHref>
+            <Link href={`/view-task/?id=${data?._id}`} passHref>
                 <EyeIcon className="w-6 h-6 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-1" />
             </Link>
           </div>

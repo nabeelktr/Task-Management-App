@@ -2,14 +2,15 @@ FROM node:alpine
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY ./client/package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY ./client ./
 
-RUN npm i rimraf
 RUN npm run build
+
+COPY ./client/.next ./.next
 
 EXPOSE 4000
 
