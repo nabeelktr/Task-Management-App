@@ -1,3 +1,4 @@
+"use client"
 import Heading from "../utils/Heading";
 import Dashboard from "../components/Dashboard/Dashboard"
 

@@ -6,7 +6,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { DotsVerticalIcon, PlusCircleIcon } from "@heroicons/react/outline";
 import CardItem from "../CardItem";
 import { useGetTasksQuery } from "../../../redux/features/apiSlice";
-import Loader from "../../utils/Loader";
+import Loader from "../../utils/Loader/Loader";
 import DroppableColumn from "../DroppableColumn";
 
 type Props = {};

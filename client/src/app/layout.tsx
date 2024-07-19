@@ -1,7 +1,12 @@
+"use client";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./Provider";
-import TopBar from "@/components/TopBar";
+import TopBar from "../components/TopBar";
+import { persistor, store } from "../../redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import { Toaster } from "sonner";
+import { ModalProvider } from "../hooks/useModal";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -17,10 +22,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} bg-blue-100`}>
-        <div className="min-w-full min-h-screen overflow-hidden text-black bg-blue-100">
-          <TopBar />
-          <Providers>{children}</Providers>
-        </div>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <div className="min-w-full min-h-screen overflow-hidden text-black bg-blue-100">
+              <ModalProvider>
+                <TopBar />
+                {children}
+                <Toaster position="top-center" />
+              </ModalProvider>
+            </div>
+          </PersistGate>
+        </Provider>
       </body>
     </html>
   );
