@@ -8,6 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Task, TaskSchema } from './schemas/task.schems';
 import { AuthModule, DatabaseModule } from '@app/common';
 import { GatewayModule } from './gateway/gateway.module';
+import { redisProvider } from './redis/redis.provider';
 
 
 @Module({
@@ -25,6 +26,6 @@ import { GatewayModule } from './gateway/gateway.module';
   GatewayModule,
 ],
   controllers: [TaskServiceController],
-  providers: [TaskServiceService, TaskRepository],
+  providers: [TaskServiceService, TaskRepository, redisProvider],
 })
 export class TaskServiceModule {}
