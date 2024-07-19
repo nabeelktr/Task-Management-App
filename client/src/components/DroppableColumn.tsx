@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { DotsVerticalIcon, PlusCircleIcon } from "@heroicons/react/outline";
 import CardItem from "../components/CardItem";
-import CustomModal from "@/utils/Modal/CustomModal";
-import AddTaskForm from "./Task/AddTaskForm";
 
 type Props = {
   droppableId: string;
