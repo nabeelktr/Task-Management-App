@@ -14,7 +14,6 @@ export class MyGateWay implements OnModuleInit {
 
     @SubscribeMessage('tasks')
     onTasks(@MessageBody() body:any) {
-        console.log(body);
         this.server.emit('onTaskUpdate', {
             msg: "task updated"
         })
