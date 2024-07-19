@@ -10,12 +10,14 @@ type Props = {
   droppableId: string;
   tasks: any;
   title: string;
+  setAdd?: any;
 };
 
 const DroppableColumn = ({
   droppableId,
   tasks,
   title,
+  setAdd
 }: Props) => {
   const filteredTasks = tasks.filter(
     (task: any) => task.status === droppableId
@@ -62,7 +64,7 @@ const DroppableColumn = ({
             <button
               className="flex justify-center items-center my-3 space-x-2 text-sm font-medium uppercase "
               onClick={() => {
-                setOpen(true);
+                setAdd(true);
               }}
             >
               <div className="hover:bg-gray-200 flex gap-2 p-2 px-3 rounded-lg">
@@ -74,9 +76,9 @@ const DroppableColumn = ({
         </div>
       )}
     </Droppable>
-    {open && (
-        <CustomModal open={open} setOpen={setOpen} setRoute={() => {}} component={AddTaskForm}  />
-      )}
+
+   
+
     </>
   );
 };

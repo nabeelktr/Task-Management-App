@@ -3,10 +3,15 @@ import React, { useEffect, useState } from "react";
 import BoardData from "../../data/board-data.json";
 import DashHeader from "./DashHeader";
 import { DragDropContext } from "@hello-pangea/dnd";
-import { useGetTasksQuery, useUpdateTaskMutation } from "../../../redux/features/apiSlice";
+import {
+  useGetTasksQuery,
+  useUpdateTaskMutation,
+} from "../../../redux/features/apiSlice";
 import Loader from "../../utils/Loader/Loader";
 import DroppableColumn from "../DroppableColumn";
 import { useModal } from "../../hooks/useModal";
+import CustomModal from "@/utils/Modal/CustomModal";
+import AddTaskForm from "../Task/AddTaskForm";
 
 type Props = {};
 
@@ -17,10 +22,12 @@ const Dashboard = (props: Props) => {
     isLoading: getTasksLoad,
     refetch,
   } = useGetTasksQuery({});
-  const [updateTask, {isSuccess: isTaskUpdated, isError, isLoading}] = useUpdateTaskMutation()
+  const [updateTask, { isSuccess: isTaskUpdated, isError, isLoading }] =
+    useUpdateTaskMutation();
   const [ready, setReady] = useState(false);
   const [boardData, setBoardData] = useState(BoardData);
-  const {open, setOpen} = useModal()
+  const { open, setOpen } = useModal();
+  const [add, setAdd] = useState<boolean>();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -31,31 +38,33 @@ const Dashboard = (props: Props) => {
     if (isSuccess && tasks) {
       setBoardData(tasks);
     }
-  },[isSuccess, tasks])
+  }, [isSuccess, tasks]);
   useEffect(() => {
-    if(isError){
-      setOpen(true)
+    if (isError) {
+      setOpen(true);
     }
-    if(isTaskUpdated){
-      refetch()
+    if (isTaskUpdated) {
+      refetch();
     }
-  }, [isTaskUpdated, isError])
+  }, [isTaskUpdated, isError]);
 
   const onDragEnd = async (result: any) => {
     if (!result.destination) return;
     const { destination, draggableId } = result;
-    const taskIndex = boardData.findIndex((task:any) => task._id === draggableId);
+    const taskIndex = boardData.findIndex(
+      (task: any) => task._id === draggableId
+    );
     if (taskIndex === -1) return;
     const updatedTask = {
-        ...boardData[taskIndex],
-        status: destination.droppableId
+      ...boardData[taskIndex],
+      status: destination.droppableId,
     };
     const newBoardData = Array.from(boardData);
     newBoardData.splice(taskIndex, 1);
     newBoardData.splice(destination.index, 0, updatedTask);
     setBoardData(newBoardData);
     await updateTask(updatedTask);
-};
+  };
 
   if (getTasksLoad) {
     return <Loader />;
@@ -71,6 +80,7 @@ const Dashboard = (props: Props) => {
               droppableId="TODO"
               tasks={boardData}
               title="TODO"
+              setAdd={setAdd}
             />
             <DroppableColumn
               droppableId="IN_PROGRESS"
@@ -84,6 +94,14 @@ const Dashboard = (props: Props) => {
             />
           </div>
         </DragDropContext>
+      )}
+      {add && (
+        <CustomModal
+          open={add}
+          setOpen={setAdd}
+          setRoute={() => {}}
+          component={AddTaskForm}
+        />
       )}
     </div>
   );
