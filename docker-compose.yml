@@ -1,5 +1,18 @@
 services:
 
+  client:
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      - auth-service
+      - api-gateway
+      - task-service
+    networks:
+      - my-network
+
   api-gateway:
     build:
       context: .
