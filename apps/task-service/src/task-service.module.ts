@@ -7,6 +7,7 @@ import { TaskRepository } from './task.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Task, TaskSchema } from './schemas/task.schems';
 import { AuthModule, DatabaseModule } from '@app/common';
+import { GatewayModule } from './gateway/gateway.module';
 
 
 @Module({
@@ -21,6 +22,7 @@ import { AuthModule, DatabaseModule } from '@app/common';
   DatabaseModule,
   MongooseModule.forFeature([{name: Task.name, schema: TaskSchema}]),
   AuthModule,
+  GatewayModule,
 ],
   controllers: [TaskServiceController],
   providers: [TaskServiceService, TaskRepository],

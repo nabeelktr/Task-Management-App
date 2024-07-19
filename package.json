@@ -8,6 +8,8 @@
     "@nestjs/mongoose": "^10.0.10",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.3.10",
+    "@nestjs/platform-socket.io": "^10.3.10",
+    "@nestjs/websockets": "^10.3.10",
     "amqp-connection-manager": "^4.1.14",
     "amqplib": "^0.10.4",
     "bcrypt": "^5.1.1",
@@ -19,7 +21,8 @@
     "mongoose": "^8.5.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "socket.io": "^4.7.5"
   },
   "scripts": {
     "prebuild": "rimraf dist",
@@ -36,7 +39,6 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/ordering-app/test/jest-e2e.json"
   },
-
   "devDependencies": {
     "@nestjs/cli": "^10.4.2",
     "@types/cookie-parser": "^1.4.7",
