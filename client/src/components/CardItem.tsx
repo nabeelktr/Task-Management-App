@@ -13,6 +13,7 @@ import { useDeleteTaskMutation } from "../../redux/features/apiSlice";
 import CustomModal from "@/utils/Modal/CustomModal";
 import EditTaskForm from "./Task/EditTaskForm";
 import Link from "next/link";
+import { socketId } from "../utils/socket";
 
 type Data = {
   _id: string;
@@ -35,6 +36,7 @@ const CardItem = ({ index, data }: Props) => {
   const [deleteTask, { isSuccess }] = useDeleteTaskMutation();
   const handleDelete = async () => {
     await deleteTask(data);
+    socketId.emit("tasks", {data: "task deleted"})
   };
 
   useEffect(() => {

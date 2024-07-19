@@ -45,7 +45,7 @@ const Dashboard = (props: Props) => {
       setOpen(true);
     }
     if (isTaskUpdated) {
-      refetch();
+      // refetch();
     }
   }, [isTaskUpdated, isError]);
 
@@ -65,6 +65,7 @@ const Dashboard = (props: Props) => {
     newBoardData.splice(destination.index, 0, updatedTask);
     setBoardData(newBoardData);
     await updateTask(updatedTask);
+    socketId.emit("tasks", {data: "task status updated"})
   };
 
   useEffect(() => {

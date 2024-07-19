@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { taskSchema } from "../../utils/yup";
 import { styles } from "../../styles/style";
 import { useAddTaskMutation } from '../../../redux/features/apiSlice';
 import { socketId } from '../../utils/socket';
+import { useDispatch } from 'react-redux';
+import { userLoggedOut } from '../../../redux/features/auth/authSlice';
+import { useModal } from '../../hooks/useModal';
 
 type TaskFormData = {
   title: string;
@@ -19,6 +22,7 @@ type Props = {
 };
 
 const AddTaskForm: React.FC<Props> = ({ setOpen }) => {
+  const dispatch = useDispatch()
   const {
     handleSubmit,
     control,
@@ -26,7 +30,15 @@ const AddTaskForm: React.FC<Props> = ({ setOpen }) => {
   } = useForm<TaskFormData>({
     resolver: yupResolver(taskSchema),
   });
-  const [addTask, {isSuccess}] = useAddTaskMutation()
+  const {open, setOpen: setAuthModal} = useModal()
+  const [addTask, {isSuccess, error}] = useAddTaskMutation()
+  
+  useEffect(() => {
+    if(error){
+      dispatch(userLoggedOut())
+      setAuthModal(true)
+    }
+  }, [error])
 
   const onSubmit = async (data: TaskFormData) => {
       await addTask({...data})
