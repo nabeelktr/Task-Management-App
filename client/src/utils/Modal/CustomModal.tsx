@@ -6,6 +6,7 @@ type Props = {
   setOpen: (open: boolean) => void;
   component: any;
   setRoute?: (route: string) => void;
+  tasks?: any;
 };
 
 const CustomModal: React.FC<Props> = ({
@@ -13,6 +14,7 @@ const CustomModal: React.FC<Props> = ({
   setOpen,
   setRoute,
   component: Component,
+  tasks,
 }) => {
   return (
     <div>
@@ -23,7 +25,7 @@ const CustomModal: React.FC<Props> = ({
         aria-describedby="modal-modal-description"
       >
         <Box className=" absolute left-[50%] top-[50%] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-[8px] bg-white p-4 shadow outline-none text-black">
-          <Component setOpen={setOpen} setRoute={setRoute} />
+          <Component setOpen={setOpen} setRoute={setRoute} tasks={tasks} />
         </Box>
       </Modal>
     </div>

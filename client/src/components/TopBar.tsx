@@ -1,5 +1,5 @@
 "use client";
-import CustomModal from "../utils/CustomModal";
+import CustomModal from "../utils/Modal/CustomModal";
 import { ArrowCircleLeftIcon, AtSymbolIcon, BellIcon, UserIcon } from "@heroicons/react/outline";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -8,6 +8,7 @@ import Login from "./auth/Login";
 import SignUp from "./auth/SignUp";
 import { useModal } from "../hooks/useModal";
 import { useLogOutMutation } from "../../redux/features/auth/authApi";
+import Link from "next/link";
 
 type Props = {};
 
@@ -28,7 +29,7 @@ const TopBar = (props: Props) => {
           <h5>TaskTrackr</h5>
         </div>
         <div className="flex space-x-6">
-          <AtSymbolIcon className="h-10 w-10 p-2 text-white" />
+          <Link href={"/"} className="text-sm uppercase font-Poppins text-white font-semibold p-2">Dashboard</Link>
           <BellIcon className="h-10 w-10 p-2 text-white" />
           {isLoggedIn  &&  <div className="relative">
                 <ArrowCircleLeftIcon

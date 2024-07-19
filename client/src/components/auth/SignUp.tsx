@@ -1,33 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useFormik } from "formik";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { AuthSchema } from "../../utils/yup";
 import { styles } from "../../styles/style";
+import { useRegisterMutation } from "../../../redux/features/auth/authApi";
 
 export default function SignUp({ setRoute }: any) {
   const [show, setshow] = useState(false);
+  const [register, {isSuccess, error}] = useRegisterMutation();
+  useEffect(() => {
+    if(isSuccess){
+      toast.success("Signup successful")
+      setRoute("Login")
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData?.data?.message);
+      }
+    }
+  },[isSuccess, error])
 
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: AuthSchema,
     onSubmit: async ({ email, password }) => {
-      const data = {
-        email,
-        password,
-      };
-      try {
-        // const result = await signup({ email, password }).unwrap();
-        // if (result.message) {
-        //   toast.info("account created");
-        // } else {
-        //   toast.error(result);
-        // }
-       setRoute("Login")
-      } catch (err) {
-        toast.info("User already exists");
-        setRoute("Login") 
-      }
+    await register({ email, password }).unwrap();
     },
   });
 

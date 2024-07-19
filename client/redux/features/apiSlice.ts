@@ -6,23 +6,23 @@ export const apiSlice = createApi({
     baseUrl: "http://localhost:3001/api/v1/",
   }),
   endpoints: (builder) => ({
-    // getAllTasks: builder.mutation({
-    //   query: (data) => ({
-    //     url: "task-service/get-available-rooms",
-    //     method: "POST",
-    //     body: data,
-    //     credentials: "include" as const,
-    //   }),
-    // }),
 
-    // bookRoom: builder.mutation({
-    //   query: (data) => ({
-    //     url: "book-room",
-    //     method: "POST",
-    //     body: data,
-    //     credentials: "include" as const,
-    //   }),
-    // }),
+    updateTask: builder.mutation({
+      query: (data) => ({
+        url: `task-service/tasks/${data._id}`,
+        method: "PUT",
+        body: data,
+        credentials: "include" as const,
+      }),
+    }),
+
+    deleteTask: builder.mutation({
+      query: (data) => ({
+        url: `task-service/tasks/${data._id}`,
+        method: "DELETE",
+        credentials: "include" as const,
+      }),
+    }),
 
     getTasks: builder.query({
       query: () => ({
@@ -32,34 +32,30 @@ export const apiSlice = createApi({
       }),
     }),
 
-    // cancelBooking: builder.mutation({
-    //   query: (data) => ({
-    //     url: "cancel-booking",
-    //     method: "POST",
-    //     credentials: "include" as const,
-    //     body: data,
-    //   }),
-    // }),
+    getTask: builder.query({
+      query: (data) => ({
+        url: `task-service/tasks/view/${data.id}`,
+        method: "GET",
+        credentials: "include" as const,
+      }),
+    }),
 
-    // getActions: builder.query({
-    //   query: () => ({
-    //     url: "get-actions",
-    //     method: "GET",
-    //     credentials: "include" as const,
-    //   }),
-    // }),
+    addTask: builder.mutation({
+      query: (data) => ({
+        url: "task-service/tasks",
+        method: "POST",
+        credentials: "include" as const,
+        body: data,
+      }),
+    }),
 
-    // changeRoomStatus: builder.mutation({
-    //     query: (data) => ({
-    //       url: "change-room-status",
-    //       method: "POST",
-    //       credentials: "include" as const,
-    //       body: data,
-    //     }),
-    //   }),
   }),
 });
 
 export const {
   useGetTasksQuery,
+  useUpdateTaskMutation,
+  useAddTaskMutation,
+  useDeleteTaskMutation,
+  useGetTaskQuery,
 } = apiSlice;
