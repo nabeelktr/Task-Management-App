@@ -5,7 +5,7 @@ import { taskSchema } from "../../utils/yup";
 import { styles } from "../../styles/style";
 import { useAddTaskMutation } from '../../../redux/features/apiSlice';
 import { socketId } from '../../utils/socket';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLoggedOut } from '../../../redux/features/auth/authSlice';
 import { useModal } from '../../hooks/useModal';
 
@@ -22,6 +22,7 @@ type Props = {
 };
 
 const AddTaskForm: React.FC<Props> = ({ setOpen }) => {
+  const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn)
   const dispatch = useDispatch()
   const {
     handleSubmit,
@@ -35,14 +36,20 @@ const AddTaskForm: React.FC<Props> = ({ setOpen }) => {
   
   useEffect(() => {
     if(isError || error){
-      dispatch(userLoggedOut())
+      console.log("error", isError, error);
       setAuthModal(true)
+      dispatch(userLoggedOut())
     }
   }, [isError, error])
 
   const onSubmit = async (data: TaskFormData) => {
-      await addTask({...data})
-      socketId.emit("tasks", {data: "task added"})
+      if(!isLoggedIn){
+        console.log("error");
+        setAuthModal(true)
+      }else{
+        await addTask({...data})
+        socketId.emit("tasks", {data: "task added"})
+      }
       setOpen(false);
   };
 
