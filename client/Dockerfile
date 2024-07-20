@@ -1,17 +1,15 @@
-FROM node:alpine
-
-WORKDIR /usr/src/app
-
-COPY ./client/package*.json ./
-
-RUN npm install
-
-COPY ./client ./
-
+FROM node:21-alpine3.18 as build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
 RUN npm run build
 
-COPY ./client/.next ./.next
-
-EXPOSE 4000
-
+FROM node:21-alpine3.18 as production
+WORKDIR /app
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/node_modules ./node_modules
+ENV NODE_ENV=production
 CMD ["npm", "start"]

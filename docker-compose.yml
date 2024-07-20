@@ -1,8 +1,9 @@
 services:
   client:
     build:
-      context: .
-      dockerfile: ./client/Dockerfile
+      context: ./client
+      dockerfile: Dockerfile
+      target: production
     ports:
       - "4000:4000"
     networks:
@@ -17,9 +18,7 @@ services:
     env_file:
       - ./backend/apps/api-gateway/.env
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - task-service
       - auth-service
     volumes:
@@ -39,9 +38,7 @@ services:
     env_file:
       - ./backend/apps/task-service/.env
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
       - auth-service
       - redis
@@ -57,16 +54,14 @@ services:
     build:
       context: .
       dockerfile: ./backend/apps/auth/Dockerfile
-      target: production
+      target: development
     command: npm run start:dev auth
     ports:
       - "3003:3003"
     env_file:
       - ./backend/apps/auth/.env
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
     volumes:
       - .:/app
@@ -88,43 +83,14 @@ services:
     networks:
       - my-network
 
-  mongodb-primary:
+  mongodb:
     image: docker.io/bitnami/mongodb:5.0
     environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
-      - MONGODB_REPLICA_SET_MODE=primary
       - MONGODB_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
     volumes:
-      - "mongodb_master_data:/bitnami/mongodb"
+      - "mongodb_data:/bitnami/mongodb"
     ports:
       - "27017:27017"
-    networks:
-      - my-network
-
-  mongodb-secondary:
-    image: docker.io/bitnami/mongodb:5.0
-    depends_on:
-      - mongodb-primary
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
-      - MONGODB_REPLICA_SET_MODE=secondary
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-    networks:
-      - my-network
-
-  mongodb-arbiter:
-    image: docker.io/bitnami/mongodb:5.0
-    depends_on:
-      - mongodb-primary
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
-      - MONGODB_REPLICA_SET_MODE=arbiter
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
     networks:
       - my-network
 
@@ -133,5 +99,5 @@ networks:
     driver: bridge
 
 volumes:
-  mongodb_master_data:
+  mongodb_data:
     driver: local
