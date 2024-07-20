@@ -31,14 +31,14 @@ const AddTaskForm: React.FC<Props> = ({ setOpen }) => {
     resolver: yupResolver(taskSchema),
   });
   const {open, setOpen: setAuthModal} = useModal()
-  const [addTask, {isSuccess, error}] = useAddTaskMutation()
+  const [addTask, {isSuccess, error, isError}] = useAddTaskMutation()
   
   useEffect(() => {
-    if(error){
+    if(isError || error){
       dispatch(userLoggedOut())
       setAuthModal(true)
     }
-  }, [error])
+  }, [isError, error])
 
   const onSubmit = async (data: TaskFormData) => {
       await addTask({...data})
