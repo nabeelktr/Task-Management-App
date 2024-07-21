@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 
 COPY ../../../backend/package*.json ./
 
+RUN npm install -g @nestjs/cli
 RUN npm install 
 
 COPY ../../../backend .
