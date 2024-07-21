@@ -13,7 +13,7 @@ services:
     build:
       context: .
       dockerfile: ./backend/apps/api-gateway/Dockerfile
-      target: development
+      target: production
     command: npm run start:dev api-gateway
     env_file:
       - ./backend/apps/api-gateway/.env
@@ -35,7 +35,7 @@ services:
     build:
       context: .
       dockerfile: ./backend/apps/task-service/Dockerfile
-      target: development
+      target: production
     command: npm run start:dev task-service
     env_file:
       - ./backend/apps/task-service/.env
@@ -58,7 +58,7 @@ services:
     build:
       context: .
       dockerfile: ./backend/apps/auth/Dockerfile
-      target: development
+      target: production
     command: npm run start:dev auth
     ports:
       - "3003:3003"
