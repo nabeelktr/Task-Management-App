@@ -24,6 +24,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @MessagePattern('validate_user')
   async validateUser(@CurrentUser() user: User) {
+    console.log("sample message");
     return user;
   }
 
@@ -31,6 +32,11 @@ export class AuthController {
   async logout(@Res({ passthrough: true }) response: Response) {
     await this.authService.logout(response)
     response.send({message: "Logout Successful"})
+  }
+
+  @MessagePattern('list_users')
+  async sampleMethod(){
+    return this.authService.listUsers()
   }
 
 }

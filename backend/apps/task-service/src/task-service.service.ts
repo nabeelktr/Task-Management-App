@@ -2,12 +2,15 @@ import { Inject, Injectable } from "@nestjs/common";
 import { CreateTaskRequest } from "./dto/create-task.request";
 import { TaskRepository } from "./task.repository";
 import { Redis } from "ioredis";
+import { AUTH_SERVICE } from "@app/common/auth/services";
+import { ClientProxy } from "@nestjs/microservices";
 
 @Injectable()
 export class TaskServiceService {
   constructor(
     private readonly taskRepository: TaskRepository,
-    @Inject("REDIS_CLIENT") private readonly redis: Redis
+    @Inject("REDIS_CLIENT") private readonly redis: Redis,
+    @Inject(AUTH_SERVICE) private authClient: ClientProxy
   ) {}
 
   async createTask(request: CreateTaskRequest) {
@@ -38,5 +41,9 @@ export class TaskServiceService {
     const task = await this.taskRepository.findById(taskId);
     await this.redis.set(taskId, JSON.stringify(task), "EX", 3600);
     return task;
+  }
+
+  async listUsers(){
+    return this.authClient.send("list_users", {})
   }
 }

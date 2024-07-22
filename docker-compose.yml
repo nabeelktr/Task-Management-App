@@ -1,13 +1,13 @@
 services:
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-      target: production
-    ports:
-      - "4000:4000"
-    networks:
-      - my-network
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #     target: production
+  #   ports:
+  #     - "4000:4000"
+  #   networks:
+  #     - my-network
 
   api-gateway:
     build:
@@ -18,9 +18,6 @@ services:
     env_file:
       - ./backend/apps/api-gateway/.env
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
       - task-service
       - auth-service
     volumes:

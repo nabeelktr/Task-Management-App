@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { taskSchema } from "../../utils/yup";
 import { styles } from "../../styles/style";
-import { useAddTaskMutation } from '../../../redux/features/apiSlice';
+import { useAddTaskMutation, useGetUsersQuery } from '../../../redux/features/apiSlice';
 import { socketId } from '../../utils/socket';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLoggedOut } from '../../../redux/features/auth/authSlice';
@@ -22,6 +22,10 @@ type Props = {
 };
 
 const AddTaskForm: React.FC<Props> = ({ setOpen }) => {
+  const {
+    data: users ,
+    refetch,
+  } = useGetUsersQuery({});
   const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn)
   const dispatch = useDispatch()
   const {
@@ -107,13 +111,20 @@ const AddTaskForm: React.FC<Props> = ({ setOpen }) => {
       </div>
 
       <div>
-        <label className={styles.label}>Assignee Name:</label>
+        <label className={styles.label}>Assignee:</label>
         <Controller
           name="assignee"
           control={control}
           defaultValue=""
           render={({ field }) => (
-            <input type="text" {...field} className={styles.input} />
+            <select {...field} className={styles.input}>
+              <option value="">Select Assignee</option>
+              {users && users.map((user: any) => (
+                <option key={user._id} value={user.email}>
+                  {user.email}
+                </option>
+              ))}
+            </select>
           )}
         />
         <p className="text-xs text-red-400 pt-1">

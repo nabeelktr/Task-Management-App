@@ -46,4 +46,9 @@ export class UsersService {
   async getUser(getUserArgs: Partial<User>) {
     return this.usersRepository.findOne(getUserArgs);
   }
+
+  async getUsers(){
+    return this.usersRepository.find({})
+  }
+  
 }

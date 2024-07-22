@@ -11,6 +11,10 @@ import { GatewayModule } from './gateway/gateway.module';
 import { redisProvider } from './redis/redis.provider';
 
 
+interface RmqModuleOptions {
+  name: string;
+}
+
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,

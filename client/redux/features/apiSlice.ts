@@ -49,6 +49,14 @@ export const apiSlice = createApi({
       }),
     }),
 
+    getUsers: builder.query({
+      query: () => ({
+        url: "task-service/tasks/users",
+        method: "GET",
+        credentials: "include" as const,
+      }),
+    }),
+
   }),
 });
 
@@ -58,4 +66,5 @@ export const {
   useAddTaskMutation,
   useDeleteTaskMutation,
   useGetTaskQuery,
+  useGetUsersQuery
 } = apiSlice;

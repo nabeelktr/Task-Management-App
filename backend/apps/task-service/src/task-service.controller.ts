@@ -30,9 +30,15 @@ export class TaskServiceController {
     return this.taskServiceService.deleteTask(taskId);
   }
 
+
   @Get('view/:id')
   @UseGuards(JwtAuthGuard)
   async getTask(@Param("id") taskId: string) {
     return this.taskServiceService.getTask(taskId);
+  }
+
+  @Get("users")
+  async getUser(){ 
+    return this.taskServiceService.listUsers();
   }
 }
