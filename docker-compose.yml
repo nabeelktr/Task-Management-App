@@ -1,40 +1,90 @@
 services:
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #     target: production
+  #   ports:
+  #     - "4000:4000"
+  #   networks:
+  #     - my-network
 
   api-gateway:
     build:
       context: .
-      dockerfile: ./apps/api-gateway/Dockerfile
+      dockerfile: ./backend/apps/api-gateway/Dockerfile
       target: development
     command: npm run start:dev api-gateway
     env_file:
-      - ./apps/api-gateway/.env
+      - ./backend/apps/api-gateway/.env
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - task-service
+      - auth-service
     volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - .:/app
+      - /app/node_modules
     ports:
-      - '3001:3001'
+      - "3001:3001"
+    networks:
+      - my-network
 
   task-service:
     build:
       context: .
-      dockerfile: ./apps/task-service/Dockerfile
+      dockerfile: ./backend/apps/task-service/Dockerfile
       target: development
     command: npm run start:dev task-service
     env_file:
-      - ./apps/task-service/.env
+      - ./backend/apps/task-service/.env
     depends_on:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
+      - rabbitmq
+      - auth-service
+      - redis
     volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - .:/app
+      - /app/node_modules
     ports:
-      - '3002:3002'
+      - "3002:3002"
+    networks:
+      - my-network
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: ./backend/apps/auth/Dockerfile
+      target: development
+    command: npm run start:dev auth
+    ports:
+      - "3003:3003"
+    env_file:
+      - ./backend/apps/auth/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - my-network
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+    networks:
+      - my-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - my-network
 
   mongodb-primary:
     image: docker.io/bitnami/mongodb:5.0
@@ -44,9 +94,11 @@ services:
       - MONGODB_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
     volumes:
-      - 'mongodb_master_data:/bitnami/mongodb'
+      - "mongodb_master_data:/bitnami/mongodb"
     ports:
-      - '27017:27017'
+      - "27017:27017"
+    networks:
+      - my-network
 
   mongodb-secondary:
     image: docker.io/bitnami/mongodb:5.0
@@ -58,6 +110,8 @@ services:
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
+    networks:
+      - my-network
 
   mongodb-arbiter:
     image: docker.io/bitnami/mongodb:5.0
@@ -69,6 +123,12 @@ services:
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
 
 volumes:
   mongodb_master_data:

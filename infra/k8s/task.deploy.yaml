@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-service
+  template:
+    metadata:
+      labels:
+        app: task-service
+    spec:
+      containers:
+        - name: task-service
+          image: nabeelktr/task-management-task-service:latest
+          command: ["npm", "run", "start:dev", "task-service"]
+          envFrom:
+            - configMapRef:
+                name: global-config
+          volumeMounts:
+            - name: app-volume
+              mountPath: /app
+      volumes:
+        - name: app-volume
+          hostPath:
+            path: /app/node_modules
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3002
+      targetPort: 3002
+  selector:
+    app: task-service

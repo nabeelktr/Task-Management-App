@@ -1,0 +1,9 @@
+{
+    "accessibility.signals.lineHasError": {
+        "sound": "off",
+        "announcement": "off"
+    },
+    "accessibility.signals.noInlayHints": {
+        "sound": "off"
+    }
+}

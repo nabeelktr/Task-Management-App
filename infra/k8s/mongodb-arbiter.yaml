@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-arbiter
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+      role: arbiter
+  template:
+    metadata:
+      labels:
+        app: mongodb
+        role: arbiter
+    spec:
+      containers:
+      - name: mongodb
+        image: docker.io/bitnami/mongodb:5.0
+        ports:
+        - containerPort: 27017
+          name: mongodb
+        env:
+        - name: MONGODB_ADVERTISED_HOSTNAME
+          value: mongodb-arbiter
+        - name: MONGODB_REPLICA_SET_MODE
+          value: arbiter
+        - name: MONGODB_INITIAL_PRIMARY_HOST
+          value: mongodb-primary
+        - name: MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD
+          value: password123
+        - name: MONGODB_REPLICA_SET_KEY
+          value: replicasetkey123
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-arbiter
+  labels:
+    app: mongodb
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  clusterIP: None
+  selector:
+    app: mongodb
+    role: arbiter
